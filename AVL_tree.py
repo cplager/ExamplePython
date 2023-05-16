@@ -1,6 +1,5 @@
-# Python code to insert a node in AVL tree
- 
-# Generic tree node class
+import random
+
 class TreeNode(object):
     """Note of tree"""
     def __init__(self, val):
@@ -93,7 +92,7 @@ class TreeNode(object):
 # AVL tree class which supports the
 # Insert operation
 class AVL_Tree(object):
-    """AVL Tree implementtation"""
+    """AVL Tree with insert implementation.  (Delete not implemented)"""
 
     def __init__(self, maxWidth=2):
         self.root     = None
@@ -102,18 +101,17 @@ class AVL_Tree(object):
 
     def __str__(self):
         return str(self.root)
-        ## if self.root is None:
-        ##     retur
-        ## grid = TreeNode.add_node_to_grid(self.root)
-        ## return TreeNode.stringify_grid(grid, self.maxWidth)
+    
 
+    def stringify(self):
+        grid = TreeNode.add_node_to_grid(self.root)
+        return TreeNode.simple_stringify_grid(grid)
 
 
     # Recursive function to insert key in
     # subtree rooted with node and returns
     # new root of subtree.
     def insert(self, key):
-
         self.root = self._insert(self.root, key)
 
     def _insert(self, root, key):
@@ -198,14 +196,6 @@ class AVL_Tree(object):
         return self._getHeight(root.left) - self._getHeight(root.right)
 
 
-    def preOrder(self, root):
-        if not root:
-            return
-        print(f"{root.value} ", end="")
-        self.preOrder(root.left)
-        self.preOrder(root.right)
- 
- 
 if __name__ == '__main__':
     # Driver program to test above function
     myTree = AVL_Tree()
@@ -220,3 +210,11 @@ if __name__ == '__main__':
     # Preorder Traversal
     print("constructed AVL tree is")
     print(f'\n{myTree}\n')
+
+    numbers = [x for x in range(1, 16)]
+    random.shuffle(numbers)
+    otherTree = AVL_Tree()
+    for num in numbers:
+        otherTree.insert(num)
+    print(f"1 to 100 in random order added to tree\n{otherTree}")
+    print(f'\n\n{otherTree.stringify()}')
