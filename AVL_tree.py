@@ -101,8 +101,11 @@ class AVL_Tree(object):
 
 
     def __str__(self):
-        grid = TreeNode.add_node_to_grid(self.root)
-        return TreeNode.stringify_grid(grid, self.maxWidth)
+        return str(self.root)
+        ## if self.root is None:
+        ##     retur
+        ## grid = TreeNode.add_node_to_grid(self.root)
+        ## return TreeNode.stringify_grid(grid, self.maxWidth)
 
 
 
@@ -213,16 +216,7 @@ if __name__ == '__main__':
     myTree.insert(40)
     myTree.insert(50)
     myTree.insert(25)
-    
-    """
-    The constructed AVL Tree would be
-             30
-            /  \
-           20   40
-          /  \    \
-         10  25    50
-    """
-    
+
     # Preorder Traversal
     print("constructed AVL tree is")
     print(f'\n{myTree}\n')
