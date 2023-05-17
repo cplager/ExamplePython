@@ -4,7 +4,8 @@ from TreeNode import TreeNode
 # AVL tree class which supports the
 # Insert operation
 class AVL_Tree(object):
-    """AVL Tree with insert and delete implementation."""
+    """AVL Tree with insert and delete implementation.
+    https://en.wikipedia.org/wiki/AVL_tree"""
 
     def __init__(self, maxWidth=2):
         self.root     = None
@@ -15,7 +16,7 @@ class AVL_Tree(object):
         return str(self.root)
     
 
-    def stringify(self):
+    def raw_stringify(self):
         grid = TreeNode.add_node_to_grid(self.root)
         return TreeNode.simple_stringify_grid(grid)
 
@@ -174,4 +175,4 @@ if __name__ == '__main__':
     for num in numbers:
         tree2.insert(num)
     print(f"{min(numbers)} to {max(numbers)} in random order added to tree\n{tree2}")
-    print(f'\n\nRaw tree information:\n{tree2.stringify()}')
+    print(f'\n\nRaw tree information:\n{tree2.raw_stringify()}')
