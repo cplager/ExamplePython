@@ -87,7 +87,7 @@ class TreeNode(object):
         retStr = ''
         empty  = ' ' * maxWidth
         left   = fmtStr.format(' ' * ( maxWidth      // 2) + '/' )
-        right  = fmtStr.format(' ' * ((maxWidth - 1) // 2) + '\\')
+        right  = fmtStr.format(' ' * ((maxWidth - 0) // 2) + '\\')
         for layer, row in sorted(grid.items()):
             # TODO: put in /\ where appropriate
             # should be 0 for last row
@@ -105,6 +105,8 @@ class TreeNode(object):
                 midSlsh = 0
                 aftSlsh = 0
                 befSlsh = 0
+            ## if layer == 1:
+            ##     between = before
             numSlsh = intPow(2, layer)
             maxPos  = intPow(2, layer - 1)
             print(f'{layer=} {maxPos=} {deep=} {fromBot=} {before=:2} {between=:2} {befSlsh=} {midSlsh=:2} {aftSlsh=:2}')
@@ -112,19 +114,21 @@ class TreeNode(object):
                 retStr += empty * before
             for pos in range(-maxPos, maxPos + 1):
                 node = row.get(pos)
+                if node is None and not pos:
+                    continue
                 if node:
                     value = node.value
                 else:
                     value = ''
                 retStr += fmtStr.format(value) + empty * between
             retStr += '\n'
-            ## if not fromBot:
-            ##     # don't put toothpicks on bottom row
-            ##     break
-            ## retStr += empty * befSlsh
-            ## for _ in range(numSlsh):
-            ##     retStr += left + empty * midSlsh + right + empty * aftSlsh
-            ## retStr += '\n'
+            if not fromBot:
+                # don't put toothpicks on bottom row
+                break
+            retStr += empty * befSlsh
+            for _ in range(numSlsh):
+                retStr += left + empty * midSlsh + right + empty * aftSlsh
+            retStr += '\n'
 
         return retStr
 
@@ -251,7 +255,7 @@ if __name__ == '__main__':
     print("constructed AVL tree is")
     print(f'\n{myTree}\n')
 
-    numbers = [x + 10 for x in range(1, 16)]
+    numbers = [x + 10 for x in range(1, 32)]
     random.shuffle(numbers)
     otherTree = AVL_Tree()
     for num in numbers:
