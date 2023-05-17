@@ -1,4 +1,16 @@
 import random
+from functools import cache
+
+def intPow(val, pow):
+    assert pow >= 0
+    return int(val ** pow + 0.0001)
+
+@cache
+def doublePlusOne(val):
+    assert val >= 0
+    if val == 0:
+        return 0
+    return 2 * doublePlusOne(val - 1) + 1
 
 class TreeNode(object):
     """Note of tree"""
@@ -71,21 +83,46 @@ class TreeNode(object):
         deep   = len(grid)
         fmtStr = '{:<%d}' % maxWidth
         retStr = ''
+        empty  = ' ' * maxWidth
+        left   = fmtStr.format(' ' * ( maxWidth      // 2) + '/' )
+        right  = fmtStr.format(' ' * ((maxWidth - 1) // 2) + '\\')
         for layer, row in sorted(grid.items()):
             # TODO: put in /\ where appropriate
-            spacing = int(2 ** (deep - layer) + 0.01)
+            # should be 0 for last row
+            fromBot = deep - layer - 1
+            if fromBot:
+                before  = intPow(2, fromBot    ) - 1
+                between = intPow(2, fromBot    ) - 1
+                midSlsh = before
+                aftSlsh = befSlsh = doublePlusOne(fromBot + 1)    
+                befSlsh = doublePlusOne(fromBot - 1)
+            else:
+                before  = 0
+                between = 1
+                # won't get used
+                midSlsh = None
+                aftSlsh = None
+                befSlsh = None
+            numSlsh = intPow(2, layer)
+            print(f'{layer=} {deep=} {fromBot=} {before=} {between=}')
             maxPos  = int(2 ** (layer - 1) + 0.01)
-            if not maxPos:
-                spacing += 2
-            retStr += ' ' * spacing
+            retStr += empty * before
             for pos in range(-maxPos, maxPos + 1):
                 node = row.get(pos)
                 if node:
                     value = node.value
                 else:
                     value = ''
-                retStr += fmtStr.format(value) + ' ' * spacing
+                retStr += fmtStr.format(value) + empty * between
             retStr += '\n'
+            if not fromBot:
+                # don't put toothpicks on bottom row
+                break
+            retStr += empty * befSlsh
+            for _ in range(numSlsh):
+                retStr += left + empty * midSlsh + right + empty * aftSlsh
+            retStr += '\n'
+
         return retStr
 
 
