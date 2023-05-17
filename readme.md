@@ -1,6 +1,7 @@
 ## Overview
 This repo is a collection of random examples with which I have been playing.
 
+* `AVL_tree.py` - Class implementation of AVL tree
 * `TreeNode.py` - Base class of binary tree node.
     * Can output tree in text form
 ```
