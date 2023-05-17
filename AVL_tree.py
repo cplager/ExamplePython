@@ -80,7 +80,7 @@ class TreeNode(object):
 
 
     @staticmethod
-    def stringify_grid(grid, maxWidth=2):
+    def stringify_grid(grid, maxWidth=2, verbose=False):
         # how many layers deep is this grid
         deep   = len(grid)
         fmtStr = '{:<%d}' % maxWidth
@@ -109,7 +109,9 @@ class TreeNode(object):
             ##     between = before
             numSlsh = intPow(2, layer)
             maxPos  = intPow(2, layer - 1)
-            print(f'{layer=} {maxPos=} {deep=} {fromBot=} {before=:2} {between=:2} {befSlsh=} {midSlsh=:2} {aftSlsh=:2}')
+            if verbose:
+                print(f'{layer=} {maxPos=} {deep=} {fromBot=} {before=:2} ' +
+                      f'{between=:2} {befSlsh=} {midSlsh=:2} {aftSlsh=:2}')
             if before:
                 retStr += empty * before
             for pos in range(-maxPos, maxPos + 1):
@@ -260,5 +262,5 @@ if __name__ == '__main__':
     otherTree = AVL_Tree()
     for num in numbers:
         otherTree.insert(num)
-    print(f"1 to 100 in random order added to tree\n{otherTree}")
+    print(f"{min(numbers)} to {max(numbers)} in random order added to tree\n{otherTree}")
     print(f'\n\n{otherTree.stringify()}')
