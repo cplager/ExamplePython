@@ -92,9 +92,9 @@ class TreeNode(object):
             fromBot = deep - layer - 1
             if fromBot:
                 before  = intPow(2, fromBot    ) - 1
-                between = intPow(2, fromBot    ) - 1
+                between = intPow(2, fromBot + 1) - 1
                 midSlsh = before
-                aftSlsh = befSlsh = doublePlusOne(fromBot + 1)    
+                aftSlsh = befSlsh = doublePlusOne(fromBot)    
                 befSlsh = doublePlusOne(fromBot - 1)
             else:
                 before  = 0
