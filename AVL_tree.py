@@ -38,31 +38,31 @@ class AVL_Tree(object):
  
         # Step 2 - Update the height of the
         # ancestor node
-        root.height = 1 + max(self._getHeight(root.left),
-                           self._getHeight(root.right))
+        root.height = 1 + max(self._get_height(root.left),
+                           self._get_height(root.right))
  
         # Step 3 - Get the balance factor
-        balance = self._getBalance(root)
+        balance = self._get_balance(root)
  
         # Step 4 - If the node is unbalanced,
         # then try out the 4 cases
         # Case 1 - Left Left
         if balance > 1 and key < root.left.value:
-            return self._rightRotate(root)
+            return self._right_rotate(root)
  
         # Case 2 - Right Right
         if balance < -1 and key > root.right.value:
-            return self._leftRotate(root)
+            return self._left_rotate(root)
  
         # Case 3 - Left Right
         if balance > 1 and key > root.left.value:
-            root.left = self._leftRotate(root.left)
-            return self._rightRotate(root)
+            root.left = self._left_rotate(root.left)
+            return self._right_rotate(root)
  
         # Case 4 - Right Left
         if balance < -1 and key < root.right.value:
-            root.right = self._rightRotate(root.right)
-            return self._leftRotate(root)
+            root.right = self._right_rotate(root.right)
+            return self._left_rotate(root)
  
         return root
     
@@ -96,84 +96,82 @@ class AVL_Tree(object):
             return root
 
         # Update the balance factor of nodes
-        root.height = 1 + max(self._getHeight(root.left),
-                              self._getHeight(root.right))
+        root.height = 1 + max(self._get_height(root.left),
+                              self._get_height(root.right))
 
-        balanceFactor = self._getBalance(root)
+        balanceFactor = self._get_balance(root)
 
         # Balance the tree
         if balanceFactor > 1:
             if self.getBalance(root.left) >= 0:
-                return self._rightRotate(root)
+                return self._right_rotate(root)
             else:
-                root.left = self._leftRotate(root.left)
-                return self._rightRotate(root)
+                root.left = self._left_rotate(root.left)
+                return self._right_rotate(root)
         if balanceFactor < -1:
             if self.getBalance(root.right) <= 0:
-                return self._leftRotate(root)
+                return self._left_rotate(root)
             else:
                 root.right = self.rightRotate(root.right)
-                return self._leftRotate(root)
+                return self._left_rotate(root)
         return root    
 
 
-    def _leftRotate(self, alpha):
+    def _left_rotate(self, alpha):
         beta         = alpha.right
         gamma        = beta.left
         # Perform rotation
         beta.left    = alpha
         alpha.right  = gamma
         # Update heights
-        alpha.height = 1 + max(self._getHeight(alpha.left ),
-                               self._getHeight(alpha.right))
-        beta.height  = 1 + max(self._getHeight(beta .left ),
-                               self._getHeight(beta .right))
+        alpha.height = 1 + max(self._get_height(alpha.left ),
+                               self._get_height(alpha.right))
+        beta.height  = 1 + max(self._get_height(beta .left ),
+                               self._get_height(beta .right))
         # Return the new root
         return beta
 
 
-    def _rightRotate(self, alpha):
+    def _right_rotate(self, alpha):
         beta         = alpha.left
         gamma        = beta.right
         # Perform rotation
         beta.right   = alpha
         alpha.left   = gamma
         # Update heights
-        alpha.height = 1 + max(self._getHeight(alpha.left ),
-                               self._getHeight(alpha.right))
-        beta.height  = 1 + max(self._getHeight(beta .left ),
-                               self._getHeight(beta .right))
+        alpha.height = 1 + max(self._get_height(alpha.left ),
+                               self._get_height(alpha.right))
+        beta.height  = 1 + max(self._get_height(beta .left ),
+                               self._get_height(beta .right))
         # Return the new root
         return beta
 
 
-    def _getHeight(self, root):
+    def _get_height(self, root):
         if not root:
             return 0
         return root.height
 
 
-    def _getBalance(self, root):
+    def _get_balance(self, root):
         if not root:
             return 0
-        return self._getHeight(root.left) - self._getHeight(root.right)
+        return self._get_height(root.left) - self._get_height(root.right)
 
 
 if __name__ == '__main__':
-    # Driver program to test above function
-    myTree = AVL_Tree()
+    tree1 = AVL_Tree()
     values = (10, 20, 30, 40, 50, 25)
     for val in values:
-        myTree.insert(val)
+        tree1.insert(val)
 
-    # Preorder Traversal
     print(f"constructed AVL tree from {values} is")
-    print(f'\n{myTree}\n')
+    print(f'\n{tree1}\n')
 
     numbers = [x for x in range(1, 32 + 1)]
     random.shuffle(numbers)
-    otherTree = AVL_Tree()
+    tree2 = AVL_Tree()
     for num in numbers:
-        otherTree.insert(num)
-    print(f"{min(numbers)} to {max(numbers)} in random order added to tree\n{otherTree}")
-    print(f'\n\nRaw tree information:\n{otherTree.stringify()}')
+        tree2.insert(num)
+    print(f"{min(numbers)} to {max(numbers)} in random order added to tree\n{tree2}")
+    print(f'\n\nRaw tree information:\n{tree2.stringify()}')

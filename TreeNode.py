@@ -1,6 +1,6 @@
 from functools import cache
 
-def intPow(val: int, power:int) -> int:
+def int_pow(val: int, power:int) -> int:
     """Fast power that """
     if power < 0:
         return 0
@@ -8,12 +8,12 @@ def intPow(val: int, power:int) -> int:
     return int(val ** power + 0.0001)
 
 @cache
-def doublePlusOne(val):
+def double_plus_one(val):
     """Recursive cached function use for laying out grides"""
     assert val >= 0
     if val == 0:
         return 0
-    return 2 * doublePlusOne(val - 1) + 1
+    return 2 * double_plus_one(val - 1) + 1
 
 class TreeNode(object):
     """Node implementation for binary trees"""
@@ -100,11 +100,11 @@ class TreeNode(object):
             # should be 0 for last row
             fromBot = deep - layer - 1
             if fromBot:
-                before  = intPow(2, fromBot    ) - 1
-                between = intPow(2, fromBot + 1) - 1
-                midSlsh = intPow(2, fromBot    ) - 2
-                aftSlsh = befSlsh = doublePlusOne(fromBot) + 1
-                befSlsh = doublePlusOne(fromBot - 1)
+                before  = int_pow(2, fromBot    ) - 1
+                between = int_pow(2, fromBot + 1) - 1
+                midSlsh = int_pow(2, fromBot    ) - 2
+                aftSlsh = befSlsh = double_plus_one(fromBot) + 1
+                befSlsh = double_plus_one(fromBot - 1)
             else:
                 before  = 0
                 between = 1
@@ -114,8 +114,8 @@ class TreeNode(object):
                 befSlsh = 0
             ## if layer == 1:
             ##     between = before
-            numSlsh = intPow(2, layer)
-            maxPos  = intPow(2, layer - 1)
+            numSlsh = int_pow(2, layer)
+            maxPos  = int_pow(2, layer - 1)
             if verbose:
                 print(f'{layer=} {maxPos=} {deep=} {fromBot=} {before=:2} ' +
                       f'{between=:2} {befSlsh=} {midSlsh=:2} {aftSlsh=:2}')
