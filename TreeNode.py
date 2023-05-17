@@ -1,34 +1,37 @@
 from functools import cache
 
-def intPow(val, pow):
-    if pow < 0:
+def intPow(val: int, power:int) -> int:
+    """Fast power that """
+    if power < 0:
         return 0
-    assert pow >= 0
-    return int(val ** pow + 0.0001)
+    assert power >= 0
+    return int(val ** power + 0.0001)
 
 @cache
 def doublePlusOne(val):
+    """Recursive cached function use for laying out grides"""
     assert val >= 0
     if val == 0:
         return 0
     return 2 * doublePlusOne(val - 1) + 1
 
 class TreeNode(object):
-    """Note of tree"""
+    """Node implementation for binary trees"""
     def __init__(self, val):
         self._value = val
         self.left   = None
         self.right  = None
         self.height = 1
 
+
     def stringify(self, maxWidth=2):
         grid = TreeNode.add_node_to_grid(self)
         return TreeNode.stringify_grid(grid, maxWidth)
-    
+
 
     def __str__(self):
         return self.stringify()
-    
+
 
     @property
     def value(self):
@@ -94,7 +97,6 @@ class TreeNode(object):
         left   = fmtStr.format(' ' * ( maxWidth      // 2) + '/' )
         right  = fmtStr.format(' ' * ((maxWidth - 0) // 2) + '\\')
         for layer, row in sorted(grid.items()):
-            # TODO: put in /\ where appropriate
             # should be 0 for last row
             fromBot = deep - layer - 1
             if fromBot:
@@ -136,7 +138,4 @@ class TreeNode(object):
             for _ in range(numSlsh):
                 retStr += left + empty * midSlsh + right + empty * aftSlsh
             retStr += '\n'
-
         return retStr
-
-
