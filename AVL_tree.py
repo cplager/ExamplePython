@@ -2,6 +2,8 @@ import random
 from functools import cache
 
 def intPow(val, pow):
+    if pow < 0:
+        return 0
     assert pow >= 0
     return int(val ** pow + 0.0001)
 
@@ -93,20 +95,21 @@ class TreeNode(object):
             if fromBot:
                 before  = intPow(2, fromBot    ) - 1
                 between = intPow(2, fromBot + 1) - 1
-                midSlsh = before
-                aftSlsh = befSlsh = doublePlusOne(fromBot)    
+                midSlsh = intPow(2, fromBot    ) - 2
+                aftSlsh = befSlsh = doublePlusOne(fromBot) + 1
                 befSlsh = doublePlusOne(fromBot - 1)
             else:
                 before  = 0
                 between = 1
                 # won't get used
-                midSlsh = None
-                aftSlsh = None
-                befSlsh = None
+                midSlsh = 0
+                aftSlsh = 0
+                befSlsh = 0
             numSlsh = intPow(2, layer)
-            print(f'{layer=} {deep=} {fromBot=} {before=} {between=}')
-            maxPos  = int(2 ** (layer - 1) + 0.01)
-            retStr += empty * before
+            maxPos  = intPow(2, layer - 1)
+            print(f'{layer=} {maxPos=} {deep=} {fromBot=} {before=:2} {between=:2} {befSlsh=} {midSlsh=:2} {aftSlsh=:2}')
+            if before:
+                retStr += empty * before
             for pos in range(-maxPos, maxPos + 1):
                 node = row.get(pos)
                 if node:
@@ -115,13 +118,13 @@ class TreeNode(object):
                     value = ''
                 retStr += fmtStr.format(value) + empty * between
             retStr += '\n'
-            if not fromBot:
-                # don't put toothpicks on bottom row
-                break
-            retStr += empty * befSlsh
-            for _ in range(numSlsh):
-                retStr += left + empty * midSlsh + right + empty * aftSlsh
-            retStr += '\n'
+            ## if not fromBot:
+            ##     # don't put toothpicks on bottom row
+            ##     break
+            ## retStr += empty * befSlsh
+            ## for _ in range(numSlsh):
+            ##     retStr += left + empty * midSlsh + right + empty * aftSlsh
+            ## retStr += '\n'
 
         return retStr
 
@@ -248,7 +251,7 @@ if __name__ == '__main__':
     print("constructed AVL tree is")
     print(f'\n{myTree}\n')
 
-    numbers = [x for x in range(1, 16)]
+    numbers = [x + 10 for x in range(1, 16)]
     random.shuffle(numbers)
     otherTree = AVL_Tree()
     for num in numbers:
