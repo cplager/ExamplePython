@@ -40,7 +40,7 @@ class AVL_Tree(object):
         # Step 2 - Update the height of the
         # ancestor node
         root.height = 1 + max(self._get_height(root.left),
-                           self._get_height(root.right))
+                              self._get_height(root.right))
  
         # Step 3 - Get the balance factor
         balance = self._get_balance(root)
@@ -82,13 +82,9 @@ class AVL_Tree(object):
             root.right = self._delete_node(root.right, key)
         else:
             if root.left is None:
-                temp = root.right
-                root = None
-                return temp
+                return root.right
             elif root.right is None:
-                temp = root.left
-                root = None
-                return temp
+                return root.left
             temp = self.getMinValueNode(root.right)
             root.key = temp.key
             root.right = self._delete_node(root.right,
